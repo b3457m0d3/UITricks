@@ -8,15 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 
-public class ShadeMenuFragment extends Fragment implements Animation.AnimationListener {
+public class ShadeMenuFragment extends Fragment implements Animation.AnimationListener, View.OnClickListener {
+
+    private static final String LOG_TAG = "ShadeMenuFragment";
 
     private View mInflatedView;
+    private View mRowZero;
+    private RelativeLayout mRowOne;
+    private RelativeLayout mRowTwo;
+    private RelativeLayout mRowThree;
 
     private Animation mDropDownAnimationShow;
     private Animation mDropDownAnimationHide;
 
-    private boolean mIsShowingDropDown = false;
+    private boolean mIsShowingDropDown = true;
     private boolean mIsAnimatingDropDown = false;
 
     private static final int ANIMATE_DURATION = 500;
@@ -25,8 +32,18 @@ public class ShadeMenuFragment extends Fragment implements Animation.AnimationLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mInflatedView = inflater.inflate(R.layout.fragment_shade_menu, container, false);
-        Log.d("MattTest", "onCreateView, rootView null? " + String.valueOf(mInflatedView == null));
+
         if (mInflatedView != null) {
+
+            mRowZero = mInflatedView.findViewById(R.id.row_zero);
+            mRowOne = (RelativeLayout) mInflatedView.findViewById(R.id.row_one);
+            mRowTwo = (RelativeLayout) mInflatedView.findViewById(R.id.row_two);
+            mRowThree = (RelativeLayout) mInflatedView.findViewById(R.id.row_three);
+
+            mRowOne.setOnClickListener(this);
+            mRowTwo.setOnClickListener(this);
+            mRowThree.setOnClickListener(this);
+
             loadAnimations();
         }
 
@@ -53,7 +70,6 @@ public class ShadeMenuFragment extends Fragment implements Animation.AnimationLi
     public void toggleDropDown() {
         if (!mIsAnimatingDropDown) {
             Animation animation = mIsShowingDropDown ? mDropDownAnimationHide : mDropDownAnimationShow;
-            Log.d("MattTest", "toggleDropDown, view null? " + String.valueOf(mInflatedView == null));
             if (mInflatedView != null) {
                 mInflatedView.startAnimation(animation);
             }
@@ -69,9 +85,45 @@ public class ShadeMenuFragment extends Fragment implements Animation.AnimationLi
     public void onAnimationEnd(Animation animation) {
         mIsAnimatingDropDown = false;
         mIsShowingDropDown = !mIsShowingDropDown;
+
+        // if views are animated off screen, set click listeners to null
+        setClickListenersForAllRows(mIsShowingDropDown ? this : null);
     }
 
     @Override
     public void onAnimationRepeat(Animation animation) {
+    }
+
+    public interface onRowSelectedListener {
+        public void onRowSelected(int rowNum);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d(LOG_TAG, "clicked");
+
+        int rowNum = -1;
+        if (v.equals(mRowOne)) {
+            rowNum = 1;
+        } else if (v.equals(mRowTwo)) {
+            rowNum = 2;
+        } else if (v.equals(mRowThree)) {
+            rowNum = 3;
+        }
+
+        ((MainFragment)getParentFragment()).onRowSelected(rowNum);
+    }
+
+    private void setClickListenersForAllRows(View.OnClickListener listener) {
+        mRowOne.setOnClickListener(listener);
+        mRowTwo.setOnClickListener(listener);
+        mRowThree.setOnClickListener(listener);
+    }
+
+    private void setBackgroundColors(int color) {
+        mRowZero.setBackgroundColor(color);
+        mRowOne.setBackgroundColor(color);
+        mRowTwo.setBackgroundColor(color);
+        mRowThree.setBackgroundColor(color);
     }
 }

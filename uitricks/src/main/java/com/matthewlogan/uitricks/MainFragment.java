@@ -5,26 +5,30 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements ShadeMenuFragment.onRowSelectedListener {
 
+    private RelativeLayout mInflatedView;
     private SpinUpFragment mSpinUpFragment;
     private ShadeMenuFragment mShadeMenuFragment;
+
+    private static final int mGrayColor = Color.parseColor("#708090");
+    private static final int mBlueColor = Color.parseColor("#007fff");
+    private static final int mPinkColor = Color.parseColor("#ffa5d2");
 
     private static final int mActionBarColor = Color.parseColor("#80C0C0C0");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RelativeLayout rootView = (RelativeLayout)inflater.inflate(R.layout.fragment_main, container, false);
+        mInflatedView = (RelativeLayout)inflater.inflate(R.layout.fragment_main, container, false);
 
         mSpinUpFragment = new SpinUpFragment();
         mShadeMenuFragment = new ShadeMenuFragment();
-        if (rootView != null) {
+        if (mInflatedView != null) {
             getChildFragmentManager().beginTransaction()
                     .add(R.id.mainfragment, mSpinUpFragment)
                     .add(R.id.mainfragment, mShadeMenuFragment)
@@ -33,7 +37,7 @@ public class MainFragment extends Fragment {
 
         setupActionBar();
 
-        return rootView;
+        return mInflatedView;
     }
 
     private void setupActionBar() {
@@ -50,10 +54,26 @@ public class MainFragment extends Fragment {
             hamburgerView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("MattTest", "on click, shade menu null? " + String.valueOf(mShadeMenuFragment == null));
                     mShadeMenuFragment.toggleDropDown();
                 }
             });
+        }
+    }
+
+    @Override
+    public void onRowSelected(int rowNum) {
+        switch (rowNum) {
+            case 1:
+                mInflatedView.setBackgroundColor(mGrayColor);
+                break;
+            case 2:
+                mInflatedView.setBackgroundColor(mBlueColor);
+                break;
+            case 3:
+                mInflatedView.setBackgroundColor(mPinkColor);
+                break;
+            default:
+                break;
         }
     }
 }
