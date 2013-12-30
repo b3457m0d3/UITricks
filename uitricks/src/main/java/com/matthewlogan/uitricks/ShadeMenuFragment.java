@@ -15,7 +15,6 @@ public class ShadeMenuFragment extends Fragment implements Animation.AnimationLi
     private static final String LOG_TAG = "ShadeMenuFragment";
 
     private View mInflatedView;
-    private View mRowZero;
     private RelativeLayout mRowOne;
     private RelativeLayout mRowTwo;
     private RelativeLayout mRowThree;
@@ -35,7 +34,6 @@ public class ShadeMenuFragment extends Fragment implements Animation.AnimationLi
 
         if (mInflatedView != null) {
 
-            mRowZero = mInflatedView.findViewById(R.id.row_zero);
             mRowOne = (RelativeLayout) mInflatedView.findViewById(R.id.row_one);
             mRowTwo = (RelativeLayout) mInflatedView.findViewById(R.id.row_two);
             mRowThree = (RelativeLayout) mInflatedView.findViewById(R.id.row_three);
@@ -100,8 +98,6 @@ public class ShadeMenuFragment extends Fragment implements Animation.AnimationLi
 
     @Override
     public void onClick(View v) {
-        Log.d(LOG_TAG, "clicked");
-
         int rowNum = -1;
         if (v.equals(mRowOne)) {
             rowNum = 1;
@@ -118,12 +114,5 @@ public class ShadeMenuFragment extends Fragment implements Animation.AnimationLi
         mRowOne.setOnClickListener(listener);
         mRowTwo.setOnClickListener(listener);
         mRowThree.setOnClickListener(listener);
-    }
-
-    private void setBackgroundColors(int color) {
-        mRowZero.setBackgroundColor(color);
-        mRowOne.setBackgroundColor(color);
-        mRowTwo.setBackgroundColor(color);
-        mRowThree.setBackgroundColor(color);
     }
 }
