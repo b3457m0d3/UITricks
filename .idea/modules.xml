@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/UITricks.iml" filepath="$PROJECT_DIR$/UITricks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uitricks/uitricks.iml" filepath="$PROJECT_DIR$/uitricks/uitricks.iml" />
+    </modules>
+  </component>
+</project>
+

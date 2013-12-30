@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/spin_up_layout"
+    android:layout_width="114dp"
+    android:layout_height="400dp"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="-4dp"
+    android:layout_marginLeft="-4dp"
+    android:clickable="false" >
+
+    <View
+        android:id="@+id/spin_up"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#8000FF66"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="17dp"
+        android:clickable="false" />
+
+    <View
+        android:id="@+id/spin_up_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#00688B"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="17dp"
+        android:clickable="true" />
+
+</RelativeLayout>
